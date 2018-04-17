@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1523957062 source:d:\codeblocks_program\bomberex\console.cpp
+	"console.h"
+
+1523957112 d:\codeblocks_program\bomberex\console.h
+	<windows.h>
+
