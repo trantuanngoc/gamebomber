@@ -501,7 +501,7 @@ void drawgame()
     drawBomb();
     drawAllMonster();
     gotoxy(boardWidth+10,2);                                
-        cout<<(int)(clock()-startGame)/CLOCKS_PER_SEC;                      //in màn thời gian chơi
+        cout<<(int)(clock()-startGame)/CLOCKS_PER_SEC;                      //in thời gian chơi
     SetColor(15);
      gotoxy(boardWidth+11,0);
         cout<<numberMonsterLive;                                            //in số lượng quái vật còn lại
