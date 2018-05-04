@@ -19,7 +19,7 @@ struct Adress
 
     bool endGame ;                          //kết thúc game
     bool winGame;                           //thắng cuộc
-    int tickSpeed;                          //tốc độ game
+    int SpeedGame;                          //tốc độ game
     clock_t startGame;                      //thời điểm bắt đầu game
     clock_t start;                          //thời điểm bắt đầu hẹn giờ cho bomb
     int boardWidth;                         //chiều rộng màn hình
@@ -64,7 +64,7 @@ void init()
     startGame=clock();          //thời điểm bắt đầu game
      endGame =false;            //biến kết thúc game
      winGame=false;             //biến thắng game
-     tickSpeed=70;               //tốc độ game
+     SpeedGame=20;               //tốc độ game
      boardWidth=50;              //chiều rộng map
      boardHeight=19;             //chiều cao map
      check=false;                 //trạng thái bom khởi động hay chưa
@@ -735,7 +735,7 @@ int main()
       init();                                //khởi tạo các giá trị ban đầu của game
       while(endGame==false)
         {
-            Tick(4,mainloop,drawgame);
+            Tick(SpeedGame,mainloop,drawgame);
         }
     SetBGColor(16);                         //đổi lại màu màn về đen
     system("cls");                          //xóa màn hình game
