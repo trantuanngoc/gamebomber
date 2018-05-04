@@ -17,22 +17,22 @@ struct Adress
 };
 
 
-    bool endGame ;                      //kết thúc game
-    bool winGame;                       //thắng cuộc
-    int tickSpeed;                      //tốc độ game
-    clock_t startGame;                   //thời điểm bắt đầu game
-    clock_t start;                    //thời điểm bắt đầu hẹn giờ cho bomb
-    int boardWidth;                  //chiều rộng màn hình
-    int boardHeight;                    //chiều cao màn hình
+    bool endGame ;                          //kết thúc game
+    bool winGame;                           //thắng cuộc
+    int tickSpeed;                          //tốc độ game
+    clock_t startGame;                      //thời điểm bắt đầu game
+    clock_t start;                          //thời điểm bắt đầu hẹn giờ cho bomb
+    int boardWidth;                         //chiều rộng màn hình
+    int boardHeight;                        //chiều cao màn hình
     Adress player;
-    Adress direction;                     //hướng di chuyển người chơi
+    Adress direction;                       //hướng di chuyển người chơi
     Adress bomb;
     bool monsterDeath[5];                  //trạng thái sống hay chết của quái vật
     Adress monster[5];
-    Adress directionMonster[5];     //hướng di chuyển của quái vật
-    bool check;                        //trạng thái khởi động bomb hay chưa
-    int numberMonster;     //số quái vật
-    int numberMonsterLive ; //số quái vật còn sống
+    Adress directionMonster[5];             //hướng di chuyển của quái vật
+    bool check;                             //trạng thái khởi động bomb hay chưa
+    int numberMonster;                      //số quái vật
+    int numberMonsterLive ;                 //số quái vật còn sống
     char Map[20][52]={
         "  #     #   #         #     #     #     #     #   ",
         "# # ### # ### # ### # ##### ##### # ##### ### # # ",
@@ -61,15 +61,15 @@ struct Adress
 void init()
 {
     //khởi tạo 1 số giá trị ban đầu
-    startGame=clock();
-     endGame =false;
-     winGame=false;
+    startGame=clock();          //thời điểm bắt đầu game
+     endGame =false;            //biến kết thúc game
+     winGame=false;             //biến thắng game
      tickSpeed=70;               //tốc độ game
      boardWidth=50;              //chiều rộng map
      boardHeight=19;             //chiều cao map
-     check=false;
-     numberMonster=5;
-     numberMonsterLive=5;
+     check=false;                 //trạng thái bom khởi động hay chưa
+     numberMonster=5;             //số lượng quái vật ban đầu   
+     numberMonsterLive=5;         //số lượng quái vật còn sống
 
 
     //khởi tạo hướng di chuyển người chơi
@@ -77,7 +77,7 @@ void init()
 
 
 
-     //khởi tạo màn hình thông tin
+     //khởi tạo màn hình thông tin người chơi ban đầu(gồm số quái vật, thời gian chơi..)
      SetBGColor(3);
      SetColor(15);
     for(int i=boardWidth;i<boardWidth+15;i++)
@@ -87,20 +87,20 @@ void init()
             gotoxy(i,j);
             cout<<ends;
         }
-    }
+    }                                                       //in ra khung nền bảng thông tin
         gotoxy(boardWidth+1,0);
-        cout<<"Monsters:"<<ends<<numberMonster;
+        cout<<"Monsters:"<<ends<<numberMonster;             //số quái vật ban đầu
         gotoxy(boardWidth+1,2);
         cout<<"Time: ";
         gotoxy(boardWidth+1,8);
-        cout<<"Creater :";
+        cout<<"Creater :";                                  
         gotoxy(boardWidth+1,9);
         SetColor(29);
         cout<<"Tran Tuan Ngoc";
         gotoxy(boardWidth+1,11);
         cout<<"Class: K62-IE3";
          gotoxy(3,6);
-
+//in ra hướng dẫn người chơi
     gotoxy(3,boardHeight+2);
     SetColor(11);
     cout<<"Your character: ";
@@ -124,7 +124,7 @@ void init()
 
     //cài màu map và tạo map
     SetColor(2);
-    SetBGColor(7);                  //màu map
+    SetBGColor(7);                                   //màu map
     for(int i=0;i<boardWidth;i++)
     {
         for (int j=0;j<boardHeight;j++)
@@ -135,58 +135,58 @@ void init()
     }
     gotoxy(0,0);
     for (int i=0;i<19;i++)
-    cout<<Map[i]<<endl;
+    cout<<Map[i]<<endl;                                 //in ra  các chướng ngại vật
     gotoxy(boardWidth,boardHeight-1);
-    cout<<"      >>exit   ";
+    cout<<"      >>exit   ";                           //in lối ra
 
 
     //khởi tạo quái vật
     srand(time(NULL));
     for(int i=0;i<numberMonster;i++)
     {
-    monsterDeath[i]=false;      //trang thái quái vật
-    SetColor(14);         //màu quái vật
+    monsterDeath[i]=false;                             //trang thái quái vật
+    SetColor(14);                                      //màu quái vật
     //khởi tạo vị trí ngẫu nhiên của monster
     step:{
     monster[i].x=rand()%(boardWidth-5)+5;
     monster[i].y=rand()%(boardHeight-1);
-    }
+          }
     //nếu khởi tạo trúng chướng ngại vật thì khởi tạo lại
     if(Map[monster[i].y][monster[i].x]=='#')  goto  step;
-
+    
     monster[i].x0=monster[i].x;
     monster[i].y0=monster[i].y;
     //khởi tạo hướng đi của monster
     switch (rand()%4)
-    {
-    case 0:
-        directionMonster[i].x=1;
-        directionMonster[i].y=0;
-        break;
-    case 1:
-        directionMonster[i].x=-1;
-        directionMonster[i].y=0;
-        break;
-    case 2:
-        directionMonster[i].x=0;
-        directionMonster[i].y=1;
-        break;
-    case 3:
-        directionMonster[i].x=0;
-        directionMonster[i].y=-1;
-        break;
-    }
+        {
+          case 0:
+            directionMonster[i].x=1;
+            directionMonster[i].y=0;
+            break;
+          case 1:
+            directionMonster[i].x=-1;
+            directionMonster[i].y=0;
+            break;
+          case 2:
+            directionMonster[i].x=0;
+            directionMonster[i].y=1;
+            break;
+          case 3:
+            directionMonster[i].x=0;
+            directionMonster[i].y=-1;
+            break;
+        }
     gotoxy(monster[i].x,monster[i].y);
-    cout<<static_cast<char>(2);
+    cout<<static_cast<char>(2);                         //in ra quái vật ở vị trí ban đầu                     
 
     }
 
 
     //khởi tạo  nhân vật
-    player={0,0,0,0};
-    SetColor(12);               //màu sắc nhân vật
+    player={0,0,0,0};                                   //tọa độ nhân vật ban đầu         
+    SetColor(12);                                        //màu sắc nhân vật
     gotoxy(0,0);
-    cout<<static_cast<char>(1);
+    cout<<static_cast<char>(1);                         //in ra nhân vật ở vị trí ban đầu
 
 
 
@@ -202,10 +202,10 @@ void drawPlayer()
   //vẽ nhân vật
    if((player.x!=player.x0||player.y!=player.y0))
     {
-        gotoxy(player.x,player.y);
-        cout<<static_cast<char>(1);
+        gotoxy(player.x,player.y);                      
+        cout<<static_cast<char>(1);                        //vẽ ra nhân vật ở vị trí mới
         gotoxy(player.x0,player.y0);
-        cout<<ends;
+        cout<<ends;                                         //xóa nhân vật ở vị trí cũ
     }
 }
 
@@ -214,7 +214,7 @@ void drawBomb()
     //cài màu bomb
     SetColor(11);
 
-    //vẽ bomb khi bomb đã khởi động và nhân vật ko còn đứng đó,tránh trường hợp bomb vẽ đè lên nhân vật
+    //vẽ bomb khi bomb đã khởi động(check=true) và nhân vật ko còn đứng đó ,tránh trường hợp bomb vẽ đè lên nhân vật
     if(check==true&&(player.x!=bomb.x||player.y!=bomb.y))
         {
             gotoxy(bomb.x,bomb.y);
@@ -228,13 +228,13 @@ void drawBomb()
         check=false;
         for(int j=0;j<5;j++)
         {
-            if(Map[bomb.y][bomb.x+j]=='#')  break;
-             if(bomb.x+j>=boardWidth)      break;
-            gotoxy(bomb.x+j,bomb.y);
-            cout<<static_cast<char>(219);
-            if((player.x==bomb.x+j)&&(player.y==bomb.y))
+            if(Map[bomb.y][bomb.x+j]=='#')  break;                  //nếu gặp chướng ngại vật # thì ko nổ
+             if(bomb.x+j>=boardWidth)      break;                   //gặp tường thì không nổ
+            gotoxy(bomb.x+j,bomb.y);                                
+            cout<<static_cast<char>(219);                           //vẽ tia bomb
+            if((player.x==bomb.x+j)&&(player.y==bomb.y))            //bomb nổ trúng người chơi thì chết
                 endGame=true;
-            for(int i=0;i<numberMonster;i++)
+            for(int i=0;i<numberMonster;i++)                        //bomb nổ trúng quái vật thì quái vật chết
             {
                 if((monster[i].x==bomb.x+j)&&(monster[i].y==bomb.y))
                 {
@@ -246,7 +246,7 @@ void drawBomb()
                 }
             }
         }
-         for(int j=0;j<5;j++)
+         for(int j=0;j<5;j++)                                           //vòng for thứ hai là tia thứ hai của bomb(bomb có 4 hướng)
         {
 
             if(Map[bomb.y+j][bomb.x]=='#')  break;
@@ -266,7 +266,7 @@ void drawBomb()
                 }
            }
         }
-        for(int j=0;j>-5;j--)
+        for(int j=0;j>-5;j--)                                           //tia thứ ba của bomb
         {
             if(Map[bomb.y][bomb.x+j]=='#')  break;
             if(bomb.x+j<0)  break;
@@ -286,7 +286,7 @@ void drawBomb()
             }
 
         }
-        for(int j=0;j>-5;j--)
+        for(int j=0;j>-5;j--)                                           //tia thứ 4 của bomb
         {
             if(Map[bomb.y+j][bomb.x]=='#')  break;
             if(bomb.y+j<0)      break;
@@ -309,15 +309,15 @@ void drawBomb()
 
 
         //        xóa bomb và dấu tích bomb
-         Sleep(100);
-        for(int i=0;i<5;i++)
+         Sleep(100);                                            //dừng màn hình một chút để người chơi có thể thấy tia bomb nổ
+        for(int i=0;i<5;i++)                                    //xóa tia bomb thứ nhất
         {
             if(Map[bomb.y][bomb.x+i]=='#')  break;
             if(bomb.x+i>=boardWidth)      break;
             gotoxy(bomb.x+i,bomb.y);
             cout<<ends;
         }
-         for(int i=0;i<5;i++)
+         for(int i=0;i<5;i++)                                    //xóa tia bomb thứ 2
         {
 
             if(Map[bomb.y+i][bomb.x]=='#')  break;
@@ -326,7 +326,7 @@ void drawBomb()
             cout<<ends;
 
         }
-        for(int i=0;i>-5;i--)
+        for(int i=0;i>-5;i--)                                    //xóa tia bomb thứ 3
         {
             if(Map[bomb.y][bomb.x+i]=='#')  break;
             if(bomb.x+i<0)  break;
@@ -334,7 +334,7 @@ void drawBomb()
             cout<<ends;
 
         }
-        for(int i=0;i>-5;i--)
+        for(int i=0;i>-5;i--)                                    //xóa tia bomb thứ 4
         {
             if(Map[bomb.y+i][bomb.x]=='#')  break;
             if(bomb.y+i<0)      break;
@@ -395,7 +395,7 @@ void moveMonster(int i)
     monster[i].y+=directionMonster[i].y;
 
 
-   //khi quát vật gặp tường thì sẽ quay ngược lại
+   //khi quái vật gặp tường thì sẽ quay ngược lại
     if(monster[i].x>=boardWidth)
     {
         monster[i].x=monster[i].x0;
@@ -476,7 +476,7 @@ void movePlayer()
     }
 
 
-   for(int i=0;i<numberMonster;i++)
+   for(int i=0;i<numberMonster;i++)                                 //gặp quái vật thì người chơi chết
    {
         if(player.x==monster[i].x&&player.y==monster[i].y)
             {
@@ -486,7 +486,7 @@ void movePlayer()
 }
 
 
-void drawAllMonster()
+void drawAllMonster()                                               //vẽ toàn bộ monster
   {
    for(int i=0;i<numberMonster;i++)
        {
@@ -495,15 +495,16 @@ void drawAllMonster()
   }
 
 
-void drawgame()
+void drawgame()                                                     
 {
     drawPlayer();
     drawBomb();
     drawAllMonster();
+    
     gotoxy(boardWidth+10,2);                                
         cout<<(int)(clock()-startGame)/CLOCKS_PER_SEC;                      //in thời gian chơi
-    SetColor(15);
-     gotoxy(boardWidth+11,0);
+    SetColor(15);                                                           
+    gotoxy(boardWidth+11,0);
         cout<<numberMonsterLive;                                            //in số lượng quái vật còn lại
 
 
@@ -530,13 +531,13 @@ void drawgame()
         direction.x=0;direction.y=0;
     }
 
-    //khởi động bomb
+    //khởi động bomb khi bấm phím
     if(checkKey(KEY_S))
     {
         check=true;
         bomb.x=player.x;
         bomb.y=player.y;
-         start = clock();
+         start = clock();                                       //thời điểm bắt đầu khởi động bomb
     }
 
 
@@ -547,7 +548,7 @@ void moveAllMonster ()
     for(int i=0;i<numberMonster;i++)
    {
        if(monsterDeath[i]==false)
-     moveMonster(i);
+            moveMonster(i);
    }
 
 }
@@ -555,7 +556,7 @@ void mainloop()
 {
  movePlayer();
  moveAllMonster();
- if((player.x==boardWidth-1&&player.y==boardHeight-1))
+ if((player.x==boardWidth-1&&player.y==boardHeight-1)&&numberMonsterLive==0)        //nếu người chơi đến đích và diệt hết quái thì win
     {
         endGame=true;
         winGame=true;
@@ -589,12 +590,14 @@ void drawScreen1()
         cout<<background[i];
         Sleep(200);
     }
+    
     SetColor(12);
     for (int i=0;i<11;i++)
     {   gotoxy(5,20+i);
         cout<<warning[i];
         Sleep(200);
     }
+    
     while(1)
     {
         if(kbhit())
@@ -614,16 +617,21 @@ void drawScreen2()
     gotoxy(3,6);
     SetColor(11);
     cout<<"Your character: ";
+    
     SetColor(12);
     cout<<static_cast<char>(1);
+    
     gotoxy(3,7);
     SetColor(11);
     cout<<"The monster: ";
+    
     SetColor(14);
     cout<<static_cast<char>(2);
+    
     gotoxy(3,8);
     SetColor(11);
     cout<<"The bomb: "<<static_cast<char>(79);
+    
     char option[20][80]={
         "Guide :",
         "You maybe come in the maze,find monsters and put bombs to kill them.",
@@ -641,12 +649,16 @@ void drawScreen2()
         "                     ",
         "                       "
     };
-      SetColor(11);
+    
+    
+      
+    SetColor(11);
     for (int i=0;i<20;i++)
     {   gotoxy(3,10+i);
         cout<<option[i];
         Sleep(200);
     }
+    
     while(1)
     {
         if(kbhit())
@@ -656,6 +668,7 @@ void drawScreen2()
         }
 
     }
+    
     system("cls");//xóa màn hình chờ thứ hai
 }
 void drawLastScreen()
@@ -710,22 +723,22 @@ void drawLastScreen()
 int main()
 {
 
-    ShowCur(false);         //ẩn con trỏ;
+    ShowCur(false);                          //ẩn con trỏ;
 
 
-       drawScreen1();       //in ra màn hình chờ đầu tiên
+       drawScreen1();                       //in ra màn hình chờ đầu tiên
+
+        
+      drawScreen2();                        //in ra màn hình chờ thứ hai
 
 
-      drawScreen2();            //in ra màn hình chờ thứ hai
-
-
-      init();                 //khởi tạo các giá trị ban đầu của game
+      init();                                //khởi tạo các giá trị ban đầu của game
       while(endGame==false)
         {
             Tick(4,mainloop,drawgame);
         }
-    SetBGColor(16);    //đổi lại màu màn về đen
-    system("cls");   //xóa màn hình game
-    drawLastScreen();
+    SetBGColor(16);                         //đổi lại màu màn về đen
+    system("cls");                          //xóa màn hình game
+    drawLastScreen();                       //vẽ màn hình cuối cùng
     return 0;
 }
