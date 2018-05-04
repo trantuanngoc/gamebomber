@@ -64,7 +64,7 @@ void init()
     startGame=clock();          //thời điểm bắt đầu game
      endGame =false;            //biến kết thúc game
      winGame=false;             //biến thắng game
-     SpeedGame=20;               //tốc độ game
+     SpeedGame=25;               //tốc độ game
      boardWidth=50;              //chiều rộng map
      boardHeight=19;             //chiều cao map
      check=false;                 //trạng thái bom khởi động hay chưa
